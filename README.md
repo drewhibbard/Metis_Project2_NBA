@@ -17,8 +17,7 @@ There are two main daily fantasy sports platforms, DraftKings and FanDuel.  Both
 
 ### Data Used
 
-- game log statistics from basketball-reference.com
-- historical game times and broadcast channels if I can find that info
+- 130,000 player-game logs with statistics scraped from basketball-reference.com
 
 ### Tools Used
 
@@ -30,6 +29,20 @@ There are two main daily fantasy sports platforms, DraftKings and FanDuel.  Both
 - Scikit-Lean
 - Tableau
 
-### Possible Impacts
+### Feature Engineering
 
-If this project and resulting algorithm is successful, I will be able to compete in daily fantasy competitions and likely make money.  The platforms are currently dominated by algorithms, and so not using an analytics approach is generally not a good idea.
+There are a lot of potential dummy variables here, if we want to incorporate all opponents, home/away, etc.  My workaround was to calculate each player's average fantasy points scored in each situation.  For example, one column is average fantasy points scored by each player against each team, another is fantasy points scored by each player per number of days rest.  This proved very useful, and I obtained the below correlations for these predictive variables.
+
+![](images/correlations.png)
+
+And it all depends on the player.  For an example, we will look at LeBron's variability across various predictive features.  Here are his splits.
+
+![](images/LeBron_James_away.png)
+
+![](images/LeBron_James_opp.png)
+
+![](images/LeBron_James_rest.png)
+
+### Results
+
+Using all of the engineered features, the model was able to produce an R squared of 0.66 with a Mean Absolute Error of just 8 fantasy points.  Considering the highly variable nature of the target variable (standard deviation of fantasy points scored is 14), this is a successful result.
